@@ -1,27 +1,28 @@
 import colorama
-import emoji
+# import emoji
 from .Operations import Operations
 
-def print_equation(*ops, operation=Operations.ADDITION, streak=0):
+def print_equation(*operands, operation=Operations.ADDITION, score=0):
+    output : str = ""
     if operation == Operations.ADDITION:
-        print(colorama.Fore.CYAN,str(ops[0]), end='')
-        print(colorama.Style.RESET_ALL,' + ', end='')
-        print(colorama.Fore.YELLOW,str(ops[1]), end='')
-        answer = ops[0] + ops[1]
+        formatted_operands = [f" {colorama.Fore.YELLOW}{i}{colorama.Style.RESET_ALL} " for i in operands]
+        formatted_operator = f"{colorama.Fore.GREEN} + {colorama.Style.RESET_ALL}"
+        output = formatted_operator.join( formatted_operands)
+        answer = sum(operands)
     elif operation == Operations.SUBTRACTION:
-        print(colorama.Fore.CYAN,str(ops[1]), end='')
-        print(colorama.Style.RESET_ALL,' - ', end='')
-        print(colorama.Fore.YELLOW,str(ops[0]), end='')
-        answer = ops[1] - ops[0]
+        formatted_operands = [f" {colorama.Fore.YELLOW}{i}{colorama.Style.RESET_ALL} " for i in reversed(operands)]
+        formatted_operator = f"{colorama.Fore.RED} - {colorama.Style.RESET_ALL}"
+        output = formatted_operator.join( formatted_operands)
+        answer = operands[1] - operands[0]
     else:
         print(colorama.Fore.RED, "Unknown operation!")
-    print(colorama.Style.RESET_ALL,' = ', end='')
-    c = input()
-    if str(answer) == c:
+    print(f"{output} = ", end='')
+    c = int(input())
+    if c == answer:
         print(colorama.Fore.GREEN, 'Correct!',end='')
-        if streak > 1:
-            print(colorama.Fore.CYAN, colorama.Style.BRIGHT,f' STREAK: {streak} ', end='')
-            if streak > 19: print('🦄')
+        if score > 1:
+            print(colorama.Fore.CYAN, colorama.Style.BRIGHT,f' SCORE: {score} ', end='')
+            if score > 19: print('🦄')
         print(colorama.Style.RESET_ALL, end='\n\n')
         return True
     else:
