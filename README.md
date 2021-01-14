@@ -6,9 +6,13 @@ Use **`-a`** for only addition.
 math -a
 ```
 
-User **`-m`** for only subtraction ("**m**inus").
+Use **`-m`** for only subtraction ("**m**inus").
 ```sh
 math -m
+```
+User **`-t`** for simple time-related calculations
+```sh
+math -t
 ```
 
 Quit with <kbd>Ctrl C</kbd>
