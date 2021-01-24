@@ -1,73 +1,64 @@
+from time import sleep
 import colorama
 import random
-from .Operations import Operations
+import os
+from .Classes import Operations, Addition, Subtraction, Multiplication
 from .correct_answer import correct_answer
 from .wrong_answer import wrong_answer
-
-def addition(a: int, b: int):
-    operands = [a, b]
-    formatted_operands = [
-        f" {colorama.Fore.YELLOW}{i}{colorama.Style.RESET_ALL} " for i in operands
-    ]
-    formatted_operator = f"{colorama.Fore.GREEN} + {colorama.Style.RESET_ALL}"
-    output = formatted_operator.join(formatted_operands)
-    answer = sum(operands)
-    return output, answer
+from .score_value import score_value
 
 
-def subtraction(a: int, b: int):
-    operands = [a, b]
-    formatted_operands = [
-        f" {colorama.Fore.YELLOW}{i}{colorama.Style.RESET_ALL} "
-        for i in reversed(operands)
-    ]
-    formatted_operator = f"{colorama.Fore.RED} - {colorama.Style.RESET_ALL}"
-    output = formatted_operator.join(formatted_operands)
-    answer = operands[1] - operands[0]
-    return output, answer
-
-
-def score_value(a: int, b: int, op: Operations):
-    output = 1
-    if op == Operations.ADDITION:
-        if (a >= 10 or b >= 10) and (a % 10 + b % 10 >= 10):
-            output = 2
-    elif op == Operations.SUBTRACTION:
-        if (b % 10) < (a % 10):
-            output = 2  # subtraction involves carrying one
-    elif op == Operations.TIME:
-        output = 3
-    else:
-        pass
-    return output
-
+def get_equation(operation : Operations = Operations.ADDITION):
+    """
+    Return a list of randomly generated operand values to instantiate
+    an Equation object.
+    """
+    if operation == Operations.ADDITION:
+        operands = random.randrange(20,60), random.randrange(20,60)
+        return Addition(*operands)
+    elif operation == Operations.SUBTRACTION:
+        operands = random.randrange(10,60), random.randrange(10) 
+        return Subtraction(*operands)
+    elif operation == Operations.MULTIPLICATION:
+        operand_a = random.randrange(1,6)
+        if operand_a >= 4:
+            operand_b = random.randrange(1,3)
+        else:
+            operand_b = random.randrange(2,5)
+        # operands = random.randrange(1,4), random.randrange(1,5)
+        return Multiplication(operand_a, operand_b)
+    else: 
+        raise Exception
 
 def equation(operation: Operations, score: int):
-    a = random.randrange(10)
-    b = random.randrange(10, 50)
-    operands = [a, b]
-    output: str = ""
+    """
+    Generate Equation objects, handling user input
+    """
+    try:
+        problem = get_equation(operation)
+    except Exception as ex:
+        print(colorama.Fore.RED, "Unknown operation!", colorama.Style.RESET_ALL)
+        print(ex)
+        sleep(1)
+        return False
+
+    problem = get_equation(operation)
+
     response = ""
     while True:
-        if operation == Operations.ADDITION:
-            output, answer = addition(a, b)
-        elif operation == Operations.SUBTRACTION:
-            output, answer = subtraction(a, b)
-        else:
-            print(colorama.Fore.RED, "Unknown operation!")
-        print(f"{output} = ", end="")
-
-        while True:
+        print(problem.output, end="")
+        while True: 
             try:
                 response = int(input())
                 break
             except ValueError:
                 print(f"{colorama.Fore.RED}Enter a number{colorama.Style.RESET_ALL}")
 
-        if response == answer:
-            points_earned = score_value(a, b, operation)
+        if response == problem.result:
+            points_earned = score_value(problem)
             score += points_earned
             correct_answer(score)
+            del(problem)
             return score
         else:
             wrong_answer()

@@ -9,7 +9,7 @@ def score_line(score: int):
         colorama.Style.RESET_ALL,
         end="",
     )
-    if score >= 30:
+    if score >= 20:
         print("🦄", end="\n\n")
         print(
             colorama.Fore.MAGENTA,
