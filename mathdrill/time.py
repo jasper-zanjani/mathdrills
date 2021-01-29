@@ -10,8 +10,7 @@ from .Classes import Operations
 
 def time(score: int):
     start_hour = random.randrange(1, 12)
-    start_minutes = 0
-    # start_minutes = random.randrange(5) * 5
+    start_minutes = random.randrange(4) * 15
     end_hour = start_hour + 1
     end_minutes = random.randrange(4) * 15
 
@@ -19,7 +18,7 @@ def time(score: int):
         current_hour = 12 
     else: 
         current_hour = start_hour - 1
-    current_minutes = random.randrange(1, 12) * 5
+    current_minutes = random.randrange(60)
     terminal_width = shutil.get_terminal_size().columns - 2
 
     class_time = f"Class: {colorama.Fore.YELLOW}{start_hour}:{start_minutes:02d} - {end_hour}:{end_minutes:02d}{colorama.Style.RESET_ALL}"
