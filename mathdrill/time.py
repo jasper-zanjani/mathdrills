@@ -10,9 +10,11 @@ from .Classes import Operations
 
 def time(score: int):
     start_hour = random.randrange(1, 12)
-    start_minutes = random.randrange(4) * 15
+    # start_minutes = random.randrange(4) * 15
+    start_minutes = 0
     end_hour = start_hour + 1
-    end_minutes = random.randrange(4) * 15
+    # end_minutes = random.randrange(4) * 15
+    end_minutes = 0
 
     if start_hour == 1: 
         current_hour = 12 

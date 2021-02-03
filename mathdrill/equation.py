@@ -10,23 +10,15 @@ from .score_value import score_value
 
 def get_equation(operation : Operations = Operations.ADDITION):
     """
-    Return a list of randomly generated operand values to instantiate
-    an Equation object.
+    Used to return a list of randomly generated operand values to instantiate
+    an Equation object. Now is more of a frontend to the various equation classes.
     """
     if operation == Operations.ADDITION:
-        operands = random.randrange(20,60), random.randrange(20,60)
-        return Addition(*operands)
+        return Addition()
     elif operation == Operations.SUBTRACTION:
-        operands = random.randrange(10,60), random.randrange(10) 
-        return Subtraction(*operands)
+        return Subtraction()
     elif operation == Operations.MULTIPLICATION:
-        operand_a = random.randrange(1,6)
-        if operand_a >= 4:
-            operand_b = random.randrange(1,3)
-        else:
-            operand_b = random.randrange(2,5)
-        # operands = random.randrange(1,4), random.randrange(1,5)
-        return Multiplication(operand_a, operand_b)
+        return Multiplication()
     else: 
         raise Exception
 
@@ -42,7 +34,7 @@ def equation(operation: Operations, score: int):
         sleep(1)
         return False
 
-    problem = get_equation(operation)
+    # problem = get_equation(operation)
 
     response = ""
     while True:
