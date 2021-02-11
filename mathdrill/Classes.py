@@ -21,7 +21,8 @@ class Addition(Equation):
         super().__init__(operands)
         self.operation = Operations.ADDITION
         if self.operands == ():
-            self.operands = random.randrange(20,60), random.randrange(20,60), random.randrange(10)
+            # self.operands = random.randrange(20,60), random.randrange(20,60), random.randrange(10)
+            self.operands = random.randrange(100,1000), random.randrange(100,1000)
         self.result = sum(self.operands)
         self.output = \
             f"{colorama.Fore.GREEN}{self.operation.value}{colorama.Style.RESET_ALL}".join( \
